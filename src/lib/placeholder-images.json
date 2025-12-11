@@ -1,3 +1,76 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "user-1",
+      "description": "A woman smiling warmly, with soft lighting.",
+      "imageUrl": "https://images.unsplash.com/photo-1598625873873-52f9aefd7d9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzY1NDAxMzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman smiling"
+    },
+    {
+      "id": "user-2",
+      "description": "A man looking thoughtfully into the distance, outdoors.",
+      "imageUrl": "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjUzOTM4NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "user-3",
+      "description": "A person laughing, captured in a candid moment.",
+      "imageUrl": "https://images.unsplash.com/photo-1610130382919-6329aec8b18d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwbGF1Z2hpbmd8ZW58MHx8fHwxNzY1NDMzNjAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person laughing"
+    },
+    {
+      "id": "user-4",
+      "description": "A woman with glasses reading a book in a cozy cafe.",
+      "imageUrl": "https://images.unsplash.com/photo-1642544435906-c6f9b99d5ba4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b21hbiUyMHJlYWRpbmd8ZW58MHx8fHwxNzY1MzU3NTA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman reading"
+    },
+    {
+      "id": "user-5",
+      "description": "A man hiking on a mountain trail, looking adventurous.",
+      "imageUrl": "https://images.unsplash.com/photo-1603989166162-209c9e033888?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBoaWtpbmd8ZW58MHx8fHwxNzY1NDAyMDE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man hiking"
+    },
+    {
+      "id": "user-6",
+      "description": "A person painting on a canvas, focused and creative.",
+      "imageUrl": "https://images.unsplash.com/photo-1461344577544-4e5dc9487184?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXJzb24lMjBwYWludGluZ3xlbnwwfHx8fDE3NjUzNTU0MjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person painting"
+    },
+    {
+      "id": "user-7",
+      "description": "A woman practicing yoga on a beach at sunrise.",
+      "imageUrl": "https://images.unsplash.com/photo-1518708909080-704599b19972?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b21hbiUyMHlvZ2F8ZW58MHx8fHwxNzY1Mzg0MTcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman yoga"
+    },
+    {
+      "id": "user-8",
+      "description": "A man playing a guitar, with a passionate expression.",
+      "imageUrl": "https://images.unsplash.com/photo-1635350480424-56fcf5f27525?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYW4lMjBndWl0YXJ8ZW58MHx8fHwxNzY1MzU3NTA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man guitar"
+    },
+    {
+      "id": "user-9",
+      "description": "A person working on a laptop in a modern co-working space.",
+      "imageUrl": "https://images.unsplash.com/photo-1571826867433-29518cc0b091?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwZXJzb24lMjBsYXB0b3B8ZW58MHx8fHwxNzY1MzY2MjMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person laptop"
+    },
+    {
+      "id": "user-10",
+      "description": "A woman enjoying a cup of coffee by a window.",
+      "imageUrl": "https://images.unsplash.com/photo-1517480625158-292a09aee755?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMGNvZmZlZXxlbnwwfHx8fDE3NjUzNjc3NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman coffee"
+    },
+    {
+      "id": "user-11",
+      "description": "A man smiling, with a city skyline in the background.",
+      "imageUrl": "https://images.unsplash.com/photo-1632226390535-2f02c1a93541?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBjaXR5fGVufDB8fHx8MTc2NTM2MjAyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man city"
+    },
+    {
+      "id": "user-12",
+      "description": "A person meditating in a peaceful garden.",
+      "imageUrl": "https://images.unsplash.com/photo-1574783797574-e7fc2348caf8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwZXJzb24lMjBtZWRpdGF0aW5nfGVufDB8fHx8MTc2NTM3NDYwNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person meditating"
+    }
+  ]
 }
