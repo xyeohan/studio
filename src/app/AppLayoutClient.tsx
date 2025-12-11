@@ -24,40 +24,8 @@ import {
 } from "lucide-react";
 import { UserNav } from "@/components/UserNav";
 import { cn } from "@/lib/utils";
-import "./globals.css";
-import { FirebaseClientProvider } from "@/firebase/client-provider";
-import { Toaster } from "@/components/ui/toaster";
-import { Alegreya } from 'next/font/google';
 
-const alegreya = Alegreya({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-alegreya',
-});
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en" className={cn(alegreya.variable)} suppressHydrationWarning>
-      <body
-        className={cn(
-          'min-h-screen bg-background font-body antialiased'
-        )}
-      >
-        <FirebaseClientProvider>
-          <AppLayoutClient>{children}</AppLayoutClient>
-        </FirebaseClientProvider>
-        <Toaster />
-      </body>
-    </html>
-  );
-}
-
-
-function AppLayoutClient({ children }: { children: React.ReactNode }) {
+export default function AppLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const isActive = (path: string, exact: boolean = false) => {
