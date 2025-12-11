@@ -1,3 +1,4 @@
+
 export type MbtiType =
   | 'INTJ' | 'INTP' | 'ENTJ' | 'ENTP'
   | 'INFJ' | 'INFP' | 'ENFJ' | 'ENFP'
@@ -8,26 +9,20 @@ export type ZodiacSign =
   | 'Aries' | 'Taurus' | 'Gemini' | 'Cancer' | 'Leo' | 'Virgo'
   | 'Libra' | 'Scorpio' | 'Sagittarius' | 'Capricorn' | 'Aquarius' | 'Pisces';
 
-export interface BigFiveTraits {
-  openness: number;
-  conscientiousness: number;
-  extraversion: number;
-  agreeableness: number;
-  neuroticism: number;
+// This represents the data stored in Firestore for a user profile.
+export interface UserProfile {
+  id: string; // Corresponds to Firebase Auth UID
+  name: string;
+  gender: string;
+  profilePhotoURL?: string;
+  bigFiveScores?: number[];
+  mbtiType?: MbtiType;
+  zodiacSign?: ZodiacSign;
+  customTraits?: string;
+  // Fields from mock data that are not in the Firestore schema yet
+  age?: number;
 }
 
-export interface UserProfile {
-  id: string;
-  name: string;
-  age: number;
-  imageUrl: string;
-  imageHint: string;
-  mbti: MbtiType;
-  zodiac: ZodiacSign;
-  bigFive: BigFiveTraits;
-  customTraits: string[];
-  compatibility?: number;
-}
 
 export interface Message {
   id: string;

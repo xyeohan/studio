@@ -13,9 +13,10 @@ import { ZodiacIcon } from "./icons/ZodiacIcon";
 import { Button } from "./ui/button";
 import { Heart, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { mockUsers } from "@/data/mock"; // Using mock for now
 
 interface ProfileCardProps {
-  user: UserProfile;
+  user: (typeof mockUsers)[0];
 }
 
 export function ProfileCard({ user }: ProfileCardProps) {
@@ -52,10 +53,10 @@ export function ProfileCard({ user }: ProfileCardProps) {
           {user.name}, {user.age}
         </h3>
         <div className="flex items-center gap-2 mt-2">
-            <MbtiIcon type={user.mbti} />
-            <div className="flex items-center justify-center p-1.5 bg-secondary rounded-md" title={user.zodiac}>
+            {user.mbti && <MbtiIcon type={user.mbti} />}
+            {user.zodiac && <div className="flex items-center justify-center p-1.5 bg-secondary rounded-md" title={user.zodiac}>
                 <ZodiacIcon sign={user.zodiac} className="w-4 h-4 text-secondary-foreground" />
-            </div>
+            </div>}
         </div>
         <div className="flex flex-wrap gap-2 mt-3">
           {user.customTraits.map((trait) => (
