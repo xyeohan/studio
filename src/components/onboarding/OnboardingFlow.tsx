@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, Loader, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader, Sparkles, Upload } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/select";
 import { MbtiType, ZodiacSign } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const mbtiTypes: MbtiType[] = [
   "INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP",
@@ -41,10 +43,11 @@ const customTraits = [
   "Fitness Enthusiast", "Animal Lover", "Cinephile", "Gamer", "Musician", "Artist",
 ];
 
-const totalSteps = 5;
+const totalSteps = 6;
 
 const stepComponents = [
   (props) => <StepWelcome {...props} />,
+  (props) => <StepUserInfo {...props} />,
   (props) => <StepBigFive {...props} />,
   (props) => <StepMbti {...props} />,
   (props) => <StepZodiacAndTraits {...props} />,
@@ -109,6 +112,78 @@ const StepWelcome = ({ onNext }) => (
     </CardFooter>
   </>
 );
+
+
+const StepUserInfo = ({ onNext, onBack }) => {
+  const [photo, setPhoto] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPhoto(event.target?.result as string);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  return (
+    <>
+      <CardHeader>
+        <CardTitle className="text-2xl font-headline">Tell Us About You</CardTitle>
+        <CardDescription>
+          Let's start with the basics. This information will be on your public profile.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="flex flex-col items-center gap-4">
+           <Avatar className="h-24 w-24">
+             <AvatarImage src={photo || undefined} />
+             <AvatarFallback className="text-3xl">
+               <Sparkles />
+             </AvatarFallback>
+           </Avatar>
+           <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handlePhotoUpload}
+            accept="image/*"
+            className="hidden"
+          />
+          <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+            <Upload className="mr-2 h-4 w-4" />
+            Upload Photo
+          </Button>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="name">Your Name</Label>
+          <Input id="name" placeholder="Enter your name" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="gender">Your Gender</Label>
+           <Select>
+            <SelectTrigger id="gender">
+              <SelectValue placeholder="Select your gender..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="female">Female</SelectItem>
+              <SelectItem value="non-binary">Non-binary</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+              <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button variant="outline" onClick={onBack}><ArrowLeft /> Back</Button>
+        <Button onClick={onNext}>Next <ArrowRight /></Button>
+      </CardFooter>
+    </>
+  );
+};
+
 
 const StepBigFive = ({ onNext, onBack }) => (
   <>
@@ -180,9 +255,9 @@ const StepMbti = ({ onNext, onBack }) => (
 );
 
 const StepZodiacAndTraits = ({ onNext, onBack }) => {
-  const [selectedTraits, setSelectedTraits] = useState([]);
+  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
 
-  const toggleTrait = (trait) => {
+  const toggleTrait = (trait: string) => {
     setSelectedTraits((prev) =>
       prev.includes(trait) ? prev.filter((t) => t !== trait) : [...prev, trait]
     );
@@ -238,7 +313,7 @@ const StepZodiacAndTraits = ({ onNext, onBack }) => {
 const StepFinalizing = ({ onFinish }) => {
     useState(() => {
         onFinish();
-    }, [onFinish]);
+    });
   return (
     <div className="min-h-[300px] flex flex-col items-center justify-center text-center p-6">
       <Loader className="h-12 w-12 animate-spin text-primary mb-4" />

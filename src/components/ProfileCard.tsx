@@ -12,6 +12,7 @@ import { MbtiIcon } from "./icons/MbtiIcon";
 import { ZodiacIcon } from "./icons/ZodiacIcon";
 import { Button } from "./ui/button";
 import { Heart, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 interface ProfileCardProps {
   user: UserProfile;
@@ -19,7 +20,8 @@ interface ProfileCardProps {
 
 export function ProfileCard({ user }: ProfileCardProps) {
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+    <Link href={`/profile/${user.id}`}>
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 h-full flex flex-col">
       <CardHeader className="p-0 relative">
         <Image
           src={user.imageUrl}
@@ -29,6 +31,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
           className="aspect-square object-cover w-full"
           data-ai-hint={user.imageHint}
         />
+        {user.compatibility && (
         <div className="absolute bottom-4 right-4">
           <div className="relative flex items-center justify-center">
             <CircularProgress value={user.compatibility} strokeWidth={6} className="w-16 h-16" />
@@ -42,8 +45,9 @@ export function ProfileCard({ user }: ProfileCardProps) {
             </div>
           </div>
         </div>
+        )}
       </CardHeader>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex-grow">
         <h3 className="text-xl font-bold font-headline">
           {user.name}, {user.age}
         </h3>
@@ -70,5 +74,6 @@ export function ProfileCard({ user }: ProfileCardProps) {
         </Button>
       </CardFooter>
     </Card>
+    </Link>
   );
 }

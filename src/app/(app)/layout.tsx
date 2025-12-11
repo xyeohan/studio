@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import {
   SidebarProvider,
   Sidebar,
@@ -17,55 +18,78 @@ import {
   MessageSquare,
   Search,
   Sparkles,
+  User,
   Users,
 } from "lucide-react";
 import { UserNav } from "@/components/UserNav";
-import { Button } from "@/components/ui/button";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string, exact: boolean = false) => {
+    if (exact) {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
+  }
 
   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <div className="flex items-center gap-2 p-2">
+          <Link href="/matches" className="flex items-center gap-2 p-2">
             <Sparkles className="w-6 h-6 text-primary" />
             <h1 className="text-xl font-headline font-bold">SoulSync</h1>
-          </div>
+          </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
-                href="/matches"
+                asChild
                 isActive={isActive("/matches")}
                 tooltip="Your best matches"
               >
-                <Heart />
-                Matches
+                <Link href="/matches">
+                  <Heart />
+                  Matches
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
-                href="/explore"
+                asChild
                 isActive={isActive("/explore")}
                 tooltip="Explore all users"
               >
-                <Users />
-                Explore
+                <Link href="/explore">
+                  <Users />
+                  Explore
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
-                href="/chat"
-                isActive={pathname.startsWith("/chat")}
+                asChild
+                isActive={isActive("/chat")}
                 tooltip="Your conversations"
               >
-                <MessageSquare />
-                Messages
+                <Link href="/chat">
+                  <MessageSquare />
+                  Messages
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive("/profile/current-user", true)}
+                tooltip="Your Profile"
+              >
+                <Link href="/profile/current-user">
+                  <User />
+                  My Profile
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
