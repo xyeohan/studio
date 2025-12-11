@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user's profile information within the SoulSync application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's displayed name."
+        },
+        "gender": {
+          "type": "string",
+          "description": "The user's gender identity."
+        },
+        "profilePhotoURL": {
+          "type": "string",
+          "description": "URL of the user's profile photo stored in Firebase Storage.",
+          "format": "uri"
+        },
+        "bigFiveScores": {
+          "type": "array",
+          "description": "An array of scores representing the user's Big Five (OCEAN) personality traits.",
+          "items": {
+            "type": "number"
+          }
+        },
+        "mbtiType": {
+          "type": "string",
+          "description": "The user's MBTI personality type."
+        },
+        "zodiacSign": {
+          "type": "string",
+          "description": "The user's zodiac sign."
+        },
+        "customTraits": {
+          "type": "string",
+          "description": "The user's custom traits."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "gender"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores user profile data, with document ID matching the Firebase Auth UID. Enables path-based ownership for simplified security rules.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure authorization independence, clarity, and scalability for the SoulSync application.  Each user's profile data is stored under their unique user ID, following a path-based ownership model. This approach simplifies security rules by directly associating data with the user who owns it. The design avoids hierarchical authorization dependencies by storing user profiles directly under the `users` collection using the user's `uid` as the document ID, thus eliminating the need for `get()` calls in security rules to validate ownership. This architecture facilitates secure `list` operations and supports the integrity of ownership and data invariants.  The structure prioritizes simplicity and debuggability."
+  }
+}

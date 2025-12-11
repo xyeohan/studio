@@ -1,0 +1,99 @@
+/**
+ * Core Philosophy: This ruleset implements a "Public Read, Owner-Only Write" model.
+ * It allows any user, authenticated or not, to view user profiles, which fosters an
+ * open and interactive community. However, write permissions (creating, updating,
+ * or deleting a profile) are strictly restricted to the authenticated owner of that
+ * profile, ensuring data integrity and user control.
+ *
+ * Data Structure: The database uses a flat structure with a single top-level
+ * collection: `/users`. Each user's profile is a document within this collection,
+ * and the document ID is the user's Firebase Authentication UID (`/users/{userId}`).
+ * This path-based ownership is simple, performant, and secure.
+ *
+ * Key Security Decisions:
+ * - Public Read Access: All user profiles are publicly readable (`get` and `list`) to
+ *   allow for features like browsing user directories or viewing profiles by tapping on them.
+ * - Strict Ownership for Writes: All write operations (`create`, `update`, `delete`)
+ *   are protected and can only be performed by the authenticated user whose UID
+ *   matches the document ID.
+ * - Self-Creation: A user can only create a profile document for themselves.
+ * - Relational Integrity: On creation, the rules enforce that the `id` field within the
+ *   profile document must match the user's UID from the path. This `id` field is then
+ *   enforced as immutable on updates.
+ *
+ * Denormalization for Authorization: The security model relies on using the user's
+ * Auth UID as the document ID in the `/users/{userId}` path. This is a powerful
+ * form of denormalization that makes ownership checks instantaneous without needing
+ * to read the document's contents or perform costly `get()` calls to other documents.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions
+    // ------------------------------------
+
+    /**
+     * Checks if the current request is from an authenticated user.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the requesting user's UID matches the provided userId.
+     * This is the fundamental check for document ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Checks for ownership on an existing document. Used for update/delete.
+     * Ensures the operation targets a document that actually exists.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * Validates that a user is creating their own profile and that the
+     * internal 'id' field correctly matches their UID. This enforces
+     * relational integrity from the moment of creation.
+     */
+    function isCreatingOwnProfile(userId) {
+      return isOwner(userId) && request.resource.data.id == userId;
+    }
+
+    /**
+     * Validates that an owner is updating their own profile and that the
+     * critical 'id' field is not being changed. This makes the ownership
+     * link immutable.
+     */
+    function isMaintainingOwnership(userId) {
+      return isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+    }
+
+    // Collection Rules
+    // ------------------------------------
+
+    /**
+     * @description Manages user profiles. Profiles are public to read, but a user can only write to their own.
+     * @path /users/{userId}
+     * @allow (get) Any user, signed in or not, can read the profile of user 'user_abc'.
+     * @allow (create) A newly signed-in user with UID 'user_abc' can create their own profile document at /users/user_abc, provided the document data contains `id: 'user_abc'`.
+     * @deny (update) User 'user_xyz' cannot update the profile of user 'user_abc'.
+     * @principle Public Read with Owner-Only Writes. Enforces that a user can only create and modify their own data.
+     */
+    match /users/{userId} {
+      // READ: Anyone can view any user's profile information.
+      allow get: if true;
+      allow list: if true;
+
+      // WRITE: Only the authenticated owner of the profile can modify it.
+      allow create: if isCreatingOwnProfile(userId);
+      allow update: if isMaintainingOwnership(userId);
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}
